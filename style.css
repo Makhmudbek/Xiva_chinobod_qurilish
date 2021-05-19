@@ -1104,5 +1104,10 @@ body.page #main-content { padding-top: 0; padding-bottom: 0; }
   button, input[type="button"], input[type="reset"], input[type="submit"] { width: 100%; }
 
   .comment-list.style-2 article .gravatar { margin: 0px; }
-
+}
+.mjn { 
+  margin-left:20px !important;
+}
+.d-none { 
+  display: none;
 }

@@ -1,241 +1,349 @@
 /**
-* Template Name: Day - v4.2.0
-* Template URL: https://bootstrapmade.com/day-multipurpose-html-template-for-free/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
+  * PreLoader
+  * Retina Logos
+  * Header Fixed
+  * Mobile Navigation
+  * Scroll to Top  
 */
-(function() {
-  "use strict";
 
-  /**
-   * Easy selector helper function
-   */
-  const select = (el, all = false) => {
-    el = el.trim()
-    if (all) {
-      return [...document.querySelectorAll(el)]
-    } else {
-      return document.querySelector(el)
-    }
-  }
+;(function($) {
+    "use strict";
 
-  /**
-   * Easy event listener function
-   */
-  const on = (type, el, listener, all = false) => {
-    let selectEl = select(el, all)
-    if (selectEl) {
-      if (all) {
-        selectEl.forEach(e => e.addEventListener(type, listener))
-      } else {
-        selectEl.addEventListener(type, listener)
-      }
-    }
-  }
+    var themesflatTheme = {
 
-  /**
-   * Easy on scroll event listener 
-   */
-  const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
-  }
+        // Main init function
+        init : function() {
+            this.config();
+            this.events();
+        },
 
-  /**
-   * Navbar links active state on scroll
-   */
-  let navbarlinks = select('#navbar .scrollto', true)
-  const navbarlinksActive = () => {
-    let position = window.scrollY + 200
-    navbarlinks.forEach(navbarlink => {
-      if (!navbarlink.hash) return
-      let section = select(navbarlink.hash)
-      if (!section) return
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        navbarlink.classList.add('active')
-      } else {
-        navbarlink.classList.remove('active')
-      }
-    })
-  }
-  window.addEventListener('load', navbarlinksActive)
-  onscroll(document, navbarlinksActive)
+        // Define vars for caching
+        config : function() {
+            this.config = {
+                $window : $( window ),
+                $document : $( document ),
+            };
+        },
 
-  /**
-   * Scrolls to an element with header offset
-   */
-  const scrollto = (el) => {
-    let header = select('#header')
-    let offset = header.offsetHeight
+        // Events
+        events : function() {
+            var self = this;
 
-    if (!header.classList.contains('header-scrolled')) {
-      offset -= 16
-    }
+            // Run on document ready
+            self.config.$document.on( 'ready', function() {
 
-    let elementPos = select(el).offsetTop
-    window.scrollTo({
-      top: elementPos - offset,
-      behavior: 'smooth'
-    })
-  }
+                // PreLoader
+                self.preLoader();
 
-  /**
-   * Header fixed top on scroll
-   */
-  let selectHeader = select('#header')
-  if (selectHeader) {
-    let headerOffset = selectHeader.offsetTop
-    let nextElement = selectHeader.nextElementSibling
-    const headerFixed = () => {
-      if ((headerOffset - window.scrollY) <= 0) {
-        selectHeader.classList.add('fixed-top')
-        nextElement.classList.add('scrolled-offset')
-      } else {
-        selectHeader.classList.remove('fixed-top')
-        nextElement.classList.remove('scrolled-offset')
-      }
-    }
-    window.addEventListener('load', headerFixed)
-    onscroll(document, headerFixed)
-  }
+                // Retina Logos
+                self.retinaLogo();
 
-  /**
-   * Back to top button
-   */
-  let backtotop = select('.back-to-top')
-  if (backtotop) {
-    const toggleBacktotop = () => {
-      if (window.scrollY > 100) {
-        backtotop.classList.add('active')
-      } else {
-        backtotop.classList.remove('active')
-      }
-    }
-    window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
-  }
+                // Header Fixed
+                self.headerFixed();
 
-  /**
-   * Mobile nav toggle
-   */
-  on('click', '.mobile-nav-toggle', function(e) {
-    select('#navbar').classList.toggle('navbar-mobile')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
-  })
+                // Mobile Navigation
+                self.mobileNav();
 
-  /**
-   * Mobile nav dropdowns activate
-   */
-  on('click', '.navbar .dropdown > a', function(e) {
-    if (select('#navbar').classList.contains('navbar-mobile')) {
-      e.preventDefault()
-      this.nextElementSibling.classList.toggle('dropdown-active')
-    }
-  }, true)
+                // Scroll to Top
+                self.scrollToTop();
 
-  /**
-   * Scrool with ofset on links with a class name .scrollto
-   */
-  on('click', '.scrollto', function(e) {
-    if (select(this.hash)) {
-      e.preventDefault()
+            } );
 
-      let navbar = select('#navbar')
-      if (navbar.classList.contains('navbar-mobile')) {
-        navbar.classList.remove('navbar-mobile')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
-      }
-      scrollto(this.hash)
-    }
-  }, true)
+            // Run on Window Load
+            self.config.$window.on( 'load', function() {
 
-  /**
-   * Scroll with ofset on page load with hash links in the url
-   */
-  window.addEventListener('load', () => {
-    if (window.location.hash) {
-      if (select(window.location.hash)) {
-        scrollto(window.location.hash)
-      }
-    }
-  });
+            } );
+        },
 
-  /**
-   * Preloader
-   */
-  let preloader = select('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove()
+        // PreLoader
+        preLoader: function() {
+            if ( $().animsition ) {
+                $('.animsition').animsition({
+                    inClass: 'fade-in',
+                    outClass: 'fade-out',
+                    inDuration: 1500,
+                    outDuration: 800,
+                    loading: true,
+                    loadingParentElement: 'body',
+                    loadingClass: 'animsition-loading',
+                    timeout: false,
+                    timeoutCountdown: 5000,
+                    onLoadEvent: true,
+                    browser: [
+                        '-webkit-animation-duration',
+                        '-moz-animation-duration',
+                        'animation-duration'
+                        ],
+                    overlay: false,
+                    overlayClass: 'animsition-overlay-slide',
+                    overlayParentElement: 'body',
+                    transition: function(url){ window.location.href = url; }
+                });
+            }
+        },
+
+        // Retina Logos
+        retinaLogo: function() {
+            var retina = window.devicePixelRatio > 1 ? true : false;
+            var $logo = $('#site-logo img');
+            var $logo_retina = $logo.data('retina');
+
+            if ( retina && $logo_retina ) {
+                $logo.attr({
+                    src: $logo.data('retina'),
+                    width: $logo.data('width'),
+                    height: $logo.data('height')
+                });
+            }
+        },
+
+        // Header Fixed
+        headerFixed: function() {
+            if ( $('body').hasClass('header-fixed') ) {
+                var nav = $('#site-header');
+
+                if ( $('body').is('.header-style-8') ) {
+                    var nav = $('.site-navigation-wrap');
+                }
+
+                if ( nav.length ) {
+                    var offsetTop = nav.offset().top,
+                        headerHeight = nav.height(),
+                        injectSpace = $('<div />', {
+                            height: headerHeight
+                        }).insertAfter(nav);
+
+                    $(window).on('load scroll', function(){
+                        if ( $(window).scrollTop() > offsetTop ) {
+                            nav.addClass('is-fixed');
+                            injectSpace.show();
+                        } else {
+                            nav.removeClass('is-fixed');
+                            injectSpace.hide();
+                        }
+
+                        if ( $(window).scrollTop() > 300 ) { 
+                            nav.addClass('is-small');
+                        } else {
+                            nav.removeClass('is-small');
+                        }
+                    })
+                }
+            }     
+        },
+
+        // Mobile Navigation
+        mobileNav: function() {
+            var menuType = 'desktop';
+
+            $(window).on('load resize', function() {
+                var mode = 'desktop';
+                var wrapMenu = $('#site-header-inner .wrap-inner');
+                var navExtw = $('.nav-extend.active');
+                var navExt = $('.nav-extend.active').children();
+
+                if ( matchMedia( 'only screen and (max-width: 991px)' ).matches )
+                    mode = 'mobile';
+
+                if ( mode != menuType ) {
+                    menuType = mode;
+
+                    if ( mode === 'mobile' ) {
+                        $('#main-nav').attr('id', 'main-nav-mobi')
+                            .appendTo('#site-header')
+                            .hide().children('.menu').append(navExt)
+                                .find('li:has(ul)')
+                                .children('ul')
+                                    .removeAttr('style')
+                                    .hide()
+                                    .before('<span class="arrow"></span>');
+                    } else {
+                        if ( $('body').is('.header-style-3') )
+                            wrapMenu = $('.site-navigation-wrap .inner');
+
+                        $('#main-nav-mobi').attr('id', 'main-nav')
+                            .removeAttr('style')
+                            .prependTo(wrapMenu)
+                            .find('.ext').appendTo(navExtw)
+                            .parent().siblings('#main-nav')
+                            .find('.sub-menu')
+                                .removeAttr('style')
+                            .prev().remove();
+                                
+                        $('.mobile-button').removeClass('active');
+                    }
+                }
+            });
+
+            $(document).on('click', '.mobile-button', function() {
+                $(this).toggleClass('active');
+                $('#main-nav-mobi').slideToggle();
+            })
+
+            $(document).on('click', '#main-nav-mobi .arrow', function() {
+                $(this).toggleClass('active').next().slideToggle();
+            })
+        },
+
+        // Scroll to Top
+        scrollToTop: function() {
+            $(window).scroll(function() {
+                if ( $(this).scrollTop() > 300 ) {
+                    $('#scroll-top').addClass('show');
+                } else {
+                    $('#scroll-top').removeClass('show');
+                }
+            });
+
+            $('#scroll-top').on('click', function() {
+                $('html, body').animate({ scrollTop: 0 }, 1000 , 'easeInOutExpo');
+            return false;
+            });
+        },
+
+    }; // end themesflatTheme
+
+    // Start things up
+    themesflatTheme.init();
+
+    var ajaxContactForm = function() {  
+        $('#contactform').each(function() {
+            $(this).validate({
+                submitHandler: function( form ) {
+                    var $form = $(form),
+                        str = $form.serialize(),
+                        loading = $('<div />', { 'class': 'loading' });
+
+                    $.ajax({
+                        type: "POST",
+                        url:  $form.attr('action'),
+                        data: str,
+                        beforeSend: function () {
+                            $form.find('.form-submit').append(loading);
+                        },
+                        success: function( msg ) {
+                            var result, cls;                            
+                            if ( msg === 'Success' ) {                                
+                                result = 'Message Sent Successfully To Email Administrator. ( You can change the email management a very easy way to get the message of customers in the user manual )';
+                                cls = 'msg-success';
+                            } else {
+                                result = 'Error sending email.';
+                                cls = 'msg-error';
+                            }
+
+                            $form.prepend(
+                                $('<div />', {
+                                    'class': 'flat-alert ' + cls,
+                                    'text' : result
+                                }).append(
+                                    $('<a class="close" href="#"><i class="fa fa-close"></i></a>')
+                                )
+                            );
+
+                            $form.find(':input').not('.submit').val('');
+                        },
+                        complete: function (xhr, status, error_thrown) {
+                            $form.find('.loading').remove();
+                        }
+                    });
+                }
+            });
+        }); // each contactform
+    };
+
+    var ajaxSubscribe = {
+        obj: {
+            subscribeEmail    : $('#subscribe-email'),
+            subscribeButton   : $('#subscribe-button'),
+            subscribeMsg      : $('#subscribe-msg'),
+            subscribeContent  : $("#subscribe-content"),
+            dataMailchimp     : $('#subscribe-form').attr('data-mailchimp'),
+            success_message   : '<div class="notification_ok">Thank you for joining our mailing list! Please check your email for a confirmation link.</div>',
+            failure_message   : '<div class="notification_error">Error! <strong>There was a problem processing your submission.</strong></div>',
+            noticeError       : '<div class="notification_error">{msg}</div>',
+            noticeInfo        : '<div class="notification_error">{msg}</div>',
+            basicAction       : 'mail/subscribe.php',
+            mailChimpAction   : 'mail/subscribe-mailchimp.php'
+        },
+
+        eventLoad: function() {
+            var objUse = ajaxSubscribe.obj;
+
+            $(objUse.subscribeButton).on('click', function() {
+                if ( window.ajaxCalling ) return;
+                var isMailchimp = objUse.dataMailchimp === 'true';
+
+                if ( isMailchimp ) {
+                    ajaxSubscribe.ajaxCall(objUse.mailChimpAction);
+                } else {
+                    ajaxSubscribe.ajaxCall(objUse.basicAction);
+                }
+            });
+        },
+
+        ajaxCall: function (action) {
+            window.ajaxCalling = true;
+            var objUse = ajaxSubscribe.obj;
+            var messageDiv = objUse.subscribeMsg.html('').hide();
+            $.ajax({
+                url: action,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                   subscribeEmail: objUse.subscribeEmail.val()
+                },
+                success: function (responseData, textStatus, jqXHR) {
+                    if ( responseData.status ) {
+                        objUse.subscribeContent.fadeOut(500, function () {
+                            messageDiv.html(objUse.success_message).fadeIn(500);
+                        });
+                    } else {
+                        switch (responseData.msg) {
+                            case "email-required":
+                                messageDiv.html(objUse.noticeError.replace('{msg}','Error! <strong>Email is required.</strong>'));
+                                break;
+                            case "email-err":
+                                messageDiv.html(objUse.noticeError.replace('{msg}','Error! <strong>Email invalid.</strong>'));
+                                break;
+                            case "duplicate":
+                                messageDiv.html(objUse.noticeError.replace('{msg}','Error! <strong>Email is duplicate.</strong>'));
+                                break;
+                            case "filewrite":
+                                messageDiv.html(objUse.noticeInfo.replace('{msg}','Error! <strong>Mail list file is open.</strong>'));
+                                break;
+                            case "undefined":
+                                messageDiv.html(objUse.noticeInfo.replace('{msg}','Error! <strong>undefined error.</strong>'));
+                                break;
+                            case "api-error":
+                                objUse.subscribeContent.fadeOut(500, function () {
+                                    messageDiv.html(objUse.failure_message);
+                                });
+                        }
+                        messageDiv.fadeIn(500);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Connection error');
+                },
+                complete: function (data) {
+                    window.ajaxCalling = false;
+                }
+            });
+        }
+    };
+
+    var alertBox = function() {
+        $(document).on('click', '.close', function(e) {
+            $(this).closest('.flat-alert').remove();
+            e.preventDefault();
+        })     
+
+    };
+    // Dom Ready
+    $(function() {
+        ajaxSubscribe.eventLoad();
+        ajaxContactForm();
+        alertBox();
     });
-  }
 
-  /**
-   * Porfolio isotope and filter
-   */
-  window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item'
-      });
-
-      let portfolioFilters = select('#portfolio-flters li', true);
-
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
-
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        portfolioIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
-        });
-      }, true);
-    }
-
-  });
-
-  /**
-   * Initiate portfolio lightbox 
-   */
-  const portfolioLightbox = GLightbox({
-    selector: '.portfolio-lightbox'
-  });
-
-  /**
-   * Portfolio details slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
-
-  /**
-   * Animation on scroll
-   */
-  window.addEventListener('load', () => {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    })
-  });
-
-})()
+})(jQuery);

@@ -158,7 +158,7 @@ button::-moz-focus-inner,
 input::-moz-focus-inner { border: 0; padding: 0; }
 
 /* Remove chrome yellow autofill */
-input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px #f7f7f7 inset }
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px #f7f7f7 inset;}
 
 /* Reset search styling */
 input[type="search"] { outline: 0 }
@@ -226,7 +226,7 @@ input[type="submit"]:focus { outline: 0; background-color: #222; }
 /* Placeholder color */
 ::-webkit-input-placeholder { color: #999; }
 :-moz-placeholder { color: #999; }
-::-moz-placeholder { color: #999; opacity: 1; }/* Since FF19 lowers the opacity of the placeholder by default */ }
+::-moz-placeholder { color: #999; opacity: 1; }
 :-ms-input-placeholder { color: #999; }
 
 /* Links */
